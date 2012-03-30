@@ -6,10 +6,9 @@ BackboneSync.RailsFayeSubscriber = (function() {
     this.client = options.client;
     this.channel = options.channel;
     this.useAuthorization = options.use_authorization;
-    this.authToken = options.auth_token;
 
     if (this.useAuthorization === true) {
-      outgoingAuth = new BackboneSync.FayeAuthorization({ auth_token: options.auth_token });
+      outgoingAuth = new BackboneSync.FayeAuthorization({ auth_token: options.auth_token , channel: this.channel});
       this.client.addExtension(outgoingAuth);
     }
 

@@ -3,6 +3,7 @@ this.BackboneSync = this.BackboneSync || {};
 BackboneSync.FayeAuthorization = (function() {
   function FayeAuthorization(options) {
     this.authToken = options.auth_token;
+    this.channel = "/sync/" + options.channel;
   }
 
   FayeAuthorization.prototype.outgoing = function(message, callback) {
@@ -14,10 +15,14 @@ BackboneSync.FayeAuthorization = (function() {
       message['ext'] = {}
     }
 
-    message['ext']['authToken'] = this.authToken;
+    if(message['subscription'] !== this.channel) {
+      return callback(message);
+    }
 
+    message['ext']['authToken'] = this.authToken;
     return callback(message);
   };
 
   return FayeAuthorization;
 })();
+
