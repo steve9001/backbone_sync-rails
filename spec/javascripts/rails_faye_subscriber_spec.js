@@ -134,6 +134,19 @@ describe("BackboneSync.RailsFayeSubscriber", function() {
     expect(model.set).toHaveBeenCalledWith({'title': 'New Title'});
   });
 
+  it("updates a model in a collection when a 'touch' message is received", function() {
+    subscriber.receive({
+      'touch': {
+        '12345': {
+          'title': 'New Title Weee'
+        }
+      }
+    });
+
+    expect(collection.get).toHaveBeenCalledWith('12345');
+    expect(model.set).toHaveBeenCalledWith({'title': 'New Title Weee'});
+  });
+
   it("removes a model from a collection when a 'destroy' message is received", function() {
     subscriber.receive({
       'destroy': {

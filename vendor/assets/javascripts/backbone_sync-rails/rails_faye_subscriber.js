@@ -55,5 +55,13 @@ BackboneSync.RailsFayeSubscriber = (function() {
     return true;
   };
 
+  RailsFayeSubscriber.prototype.touch = function(params) {
+    var self = this;
+    return $.each(params, function(id, attributes) {
+      var model = self.collection.get(id);
+      return model.set(attributes);
+    });
+  };
+
   return RailsFayeSubscriber;
 })();
