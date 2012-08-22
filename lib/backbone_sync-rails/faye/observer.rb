@@ -4,16 +4,21 @@ module BackboneSync
   module Rails
     module Faye
       module Observer
+        def after_commit(model)
+          broadcast_event(model, @_triggered_action)
+          @_triggered_action = nil
+        end
+
         def after_update(model)
-          broadcast_event(model, :update)
+          @_triggered_action = :update
         end
 
         def after_create(model)
-          broadcast_event(model, :create)
+          @_triggered_action = :create
         end
 
         def after_destroy(model)
-          broadcast_event(model, :destroy)
+          @_triggered_action = :destroy
         end
 
         def after_touch(model)
