@@ -4,7 +4,7 @@ describe BackboneSync::Rails::Faye::Observer do
   context 'Default model subchannel settings' do
     it 'broadcasts updates over a Faye channel' do
       task = Factory(:task, title: 'Old Title')
-      new_attributes = Factory.attributes_for(:task, title: 'New Title')
+      new_attributes = FactoryGirl.attributes_for(:task, title: 'New Title')
       task.update_attributes(new_attributes)
 
       expected_attributes = JSON.parse(task.to_json)
@@ -55,7 +55,7 @@ describe BackboneSync::Rails::Faye::Observer do
 
     it 'broadcasts updates over a Faye channel' do
       comment = Factory(:comment, task: task, body: 'this body isn\'t too great')
-      new_attributes = Factory.attributes_for(:comment, body: 'I like this body')
+      new_attributes = FactoryGirl.attributes_for(:comment, body: 'I like this body')
       comment.update_attributes(new_attributes)
 
       expected_attributes = JSON.parse(comment.to_json)
