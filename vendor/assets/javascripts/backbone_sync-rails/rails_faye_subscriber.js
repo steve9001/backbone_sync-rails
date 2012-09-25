@@ -22,7 +22,9 @@ BackboneSync.RailsFayeSubscriber = (function() {
   RailsFayeSubscriber.prototype.receive = function(message) {
     var self = this;
     return $.each(message, function(event, eventArguments) {
-      return self[event](eventArguments);
+      if (typeof self[event] === 'function') {
+        return self[event](eventArguments);
+      }
     });
   };
 
@@ -30,7 +32,9 @@ BackboneSync.RailsFayeSubscriber = (function() {
     var self = this;
     return $.each(params, function(id, attributes) {
       var model = self.collection.get(id);
-      return model.set(attributes);
+      if (model != undefined) {
+        return model.set(attributes);
+      }
     });
   };
 
